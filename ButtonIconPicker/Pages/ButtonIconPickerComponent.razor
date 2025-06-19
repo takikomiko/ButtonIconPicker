@@ -1,0 +1,45 @@
+﻿@page "/button-icon-picker"
+@using ButtonIconPicker.Services
+@inject HttpClient Http
+
+<h3>ButtonIconPickerComponent</h3>
+<!-- アイコンを適用するボタン -->
+<button class="btn btn-primary">
+	<i class="bi bi-0-circle"></i>
+</button>
+
+<!-- アイコンモーダルを開くトリガーとなるボタン -->
+<button class="btn btn-secondary" @onclick="OpenIconModal">
+	<i class="bi bi-search"></i>
+</button>
+
+@if(IsOpenIconModal)
+{
+	<!-- アイコンモーダル -->
+    <div class="modal show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">モーダル</h5>
+                    <button type="button" class="btn-close" @onclick="ClosIconModale"></button>
+                </div>
+                <div class="modal-body">
+                    <p>@iconListService.BootstrapIcons.FirstOrDefault()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Inject]
+    private IconListService iconListService { get; set; } = default!;
+
+	private bool IsOpenIconModal { get; set; } = false;
+
+	private void OpenIconModal() => IsOpenIconModal = true;
+
+    private void ClosIconModale() => IsOpenIconModal = false;
+
+}
